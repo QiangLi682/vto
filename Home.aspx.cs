@@ -31,7 +31,7 @@ public partial class _Default : System.Web.UI.Page
                 DataRow drUser = dsUser.Tables[0].Rows[0];
                txtUserName.Text = string.Empty;
                txtPassword.Text = string.Empty;
-                if (Convert.ToString(dsUser.Tables[0].Rows[0]["user_type"]) == "ADMIN")
+               if (Convert.ToString(dsUser.Tables[0].Rows[0]["user_type"]).Equals("ADMIN", StringComparison.OrdinalIgnoreCase))
                         Response.Redirect("AdminPage.aspx");
                     else
                         Response.Redirect("UserPage.aspx");

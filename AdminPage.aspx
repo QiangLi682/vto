@@ -27,6 +27,8 @@
     $(document).ready(function () {
 
         BlockUI("dvGrid");
+        BlockUI("dvGrid2");
+
         $.blockUI.defaults.css = {};
     });
 </script> 
@@ -42,6 +44,7 @@
  <div id = "dvGrid" style ="padding:10px;width:550px">
         <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
+            <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="logout" />
        <asp:GridView ID="GridView1" runat="server"  Width = "550px"
         AutoGenerateColumns = "false" Font-Names = "Arial" 
         Font-Size = "11pt" AlternatingRowStyle-BackColor = "#C2D69B"  
@@ -158,6 +161,14 @@
             </FooterTemplate> 
         </asp:TemplateField>
         
+
+        <asp:TemplateField>
+            <ItemTemplate>
+                <asp:LinkButton ID="lnkUsers" runat="server" CommandArgument = '<%# Eval("account_id") %>' 
+                 Text = "Users" OnClick = "ManageUsers"></asp:LinkButton>
+            </ItemTemplate>
+          </asp:TemplateField> 
+
         <asp:TemplateField>
             <ItemTemplate>
                 <asp:LinkButton ID="lnkRemove" runat="server" CommandArgument = '<%# Eval("account_id")%>' 
@@ -168,10 +179,7 @@
                 <asp:Button ID="btnAdd" runat="server" Text="Add" OnClick = "AddNewAccount" />
             </FooterTemplate> 
         </asp:TemplateField> 
-
-          
-
-        <asp:CommandField  ShowEditButton="True" /> 
+       <asp:CommandField  ShowEditButton="True" /> 
        </Columns> 
        <AlternatingRowStyle BackColor="#C2D69B"  />
     </asp:GridView> 
@@ -181,6 +189,117 @@
         <asp:AsyncPostBackTrigger ControlID = "GridView1" /> 
     </Triggers> 
     </asp:UpdatePanel> 
+
+
+
+
+         </div>
+
+
+      <div id = "dvGrid2" style ="padding:10px;width:550px">
+        <asp:UpdatePanel ID="UpdatePanel2" runat="server">
+        <ContentTemplate>
+       <asp:GridView ID="GridView2" runat="server"  Width = "550px"
+        AutoGenerateColumns = "false" Font-Names = "Arial" 
+        Font-Size = "11pt" AlternatingRowStyle-BackColor = "#C2D69B"  
+        HeaderStyle-BackColor = "white" AllowPaging ="true"  ShowFooter = "true"  
+        PageSize = "10"
+        OnPageIndexChanging = "OnPagingUser" onrowediting="EditUser"
+        onrowupdating="UpdateUser"  onrowcancelingedit="CancelEditUser">
+      <Columns>
+
+             <asp:TemplateField ItemStyle-Width = "30px"  HeaderText = "user_id">
+            <ItemTemplate>
+                <asp:Label ID="lbluser_id" runat="server" Text='<%# Eval("user_id")%>'></asp:Label>
+            </ItemTemplate>
+            </asp:TemplateField> 
+
+        <asp:TemplateField ItemStyle-Width = "30px"  HeaderText = "user_isenabled">
+            <ItemTemplate>
+                <asp:Label ID="lbluser_isenabled" runat="server" Text='<%# Eval("user_isenabled")%>'></asp:Label>
+            </ItemTemplate> 
+            <EditItemTemplate>
+                <asp:TextBox ID="txtuser_isenabled" runat="server" Text='<%# Eval("user_isenabled")%>'></asp:TextBox>
+            </EditItemTemplate>  
+            <FooterTemplate>
+                <asp:TextBox ID="txtuser_isenabled" runat="server"></asp:TextBox>
+            </FooterTemplate> 
+
+        </asp:TemplateField> 
+        <asp:TemplateField ItemStyle-Width = "100px"  HeaderText = "user_name">
+            <ItemTemplate>
+                <asp:Label ID="lbluser_name" runat="server" Text='<%# Eval("user_name")%>'></asp:Label>
+            </ItemTemplate>
+            <EditItemTemplate>
+                <asp:TextBox ID="txtuser_name" runat="server" Text='<%# Eval("user_name")%>'></asp:TextBox>
+            </EditItemTemplate>  
+            <FooterTemplate>
+                <asp:TextBox ID="txtuser_name" runat="server"></asp:TextBox>
+            </FooterTemplate> 
+        </asp:TemplateField>
+        <asp:TemplateField ItemStyle-Width = "150px"  HeaderText = "user_password">
+            <ItemTemplate>
+                <asp:Label ID="lbluser_password" runat="server" Text='<%# Eval("user_password")%>'></asp:Label>
+            </ItemTemplate>
+            <EditItemTemplate>
+                <asp:TextBox ID="txtuser_password" runat="server" Text='<%# Eval("user_password")%>'></asp:TextBox>
+            </EditItemTemplate>  
+            <FooterTemplate>
+                <asp:TextBox ID="txtuser_password" runat="server"></asp:TextBox>
+            </FooterTemplate> 
+        </asp:TemplateField>
+           <asp:TemplateField ItemStyle-Width = "150px"  HeaderText = "user_lastlogin">
+            <ItemTemplate>
+                <asp:Label ID="lbluser_lastlogin" runat="server" Text='<%# Eval("user_lastlogin")%>'></asp:Label>
+            </ItemTemplate>
+            
+        </asp:TemplateField>
+           <asp:TemplateField ItemStyle-Width = "150px"  HeaderText = "user_type">
+            <ItemTemplate>
+                <asp:Label ID="lbluser_type" runat="server" Text='<%# Eval("user_type")%>'></asp:Label>
+            </ItemTemplate>
+            <EditItemTemplate>
+                <asp:TextBox ID="txtuser_type" runat="server" Text='<%# Eval("user_type")%>'></asp:TextBox>
+            </EditItemTemplate>  
+            <FooterTemplate>
+                <asp:TextBox ID="txtuser_type" runat="server"></asp:TextBox>
+            </FooterTemplate> 
+        </asp:TemplateField>
+          
+
+               <asp:TemplateField ItemStyle-Width = "150px"  HeaderText = "user_accountID">
+            <ItemTemplate>
+                <asp:Label ID="lbluser_accountID" runat="server" Text='<%# Eval("user_accountID")%>'></asp:Label>
+            </ItemTemplate>
+             </asp:TemplateField>
+           
+           
+        <asp:TemplateField>
+            <ItemTemplate>
+                <asp:LinkButton ID="lnkRemoveUser" runat="server" CommandArgument = '<%# Eval("user_id")%>' 
+                 OnClientClick = "return confirm('Do you want to delete?')"
+                Text = "Delete" OnClick = "DeleteUser"></asp:LinkButton>
+            </ItemTemplate>
+             <FooterTemplate>
+                <asp:Button ID="btnAddUser" runat="server" Text="Add" OnClick = "AddNewUser" />
+            </FooterTemplate> 
+        </asp:TemplateField> 
+
+
+       <asp:CommandField  ShowEditButton="True" /> 
+       </Columns> 
+       <AlternatingRowStyle BackColor="#C2D69B"  />
+    </asp:GridView> 
+    <asp:Label ID="lbluser" runat="server" CssClass="bold" ForeColor="#0033CC"></asp:Label>
+    </ContentTemplate> 
+    <Triggers>
+        <asp:AsyncPostBackTrigger ControlID = "GridView2" /> 
+    </Triggers> 
+    </asp:UpdatePanel> 
+
+
+
+
 
     </div>
      

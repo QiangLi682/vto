@@ -10,7 +10,7 @@ using System.Data.SqlClient;
 public partial class AdminHome : System.Web.UI.Page
 {
     private test9.mobilewebserviceSoapClient ws;
-    static int nSelected_account_id = 1; // this is MINT
+    public static int nSelected_account_id = 1; // this is MINT
      
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -29,7 +29,7 @@ public partial class AdminHome : System.Web.UI.Page
            
         }
     }
-
+     
     private void BindData()
     {
 
@@ -108,6 +108,15 @@ public partial class AdminHome : System.Web.UI.Page
 
         lblmsg.Text = "add new account for " + bname;
       }
+
+
+    protected void OnUserPaging(object sender, GridViewPageEventArgs e)
+    {
+        BindDataUser(nSelected_account_id);
+        GridView2.PageIndex = e.NewPageIndex;
+        GridView2.DataBind();
+
+    }
 
     protected void OnPaging(object sender, GridViewPageEventArgs e)
     {

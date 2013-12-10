@@ -204,7 +204,7 @@
         Font-Size = "11pt" AlternatingRowStyle-BackColor = "#C2D69B"  
         HeaderStyle-BackColor = "white" AllowPaging ="true"  ShowFooter = "true"  
         PageSize = "10"
-        OnPageIndexChanging = "OnPagingUser" onrowediting="EditUser"
+        OnPageIndexChanging = "OnUserPaging" onrowediting="EditUser"
         onrowupdating="UpdateUser"  onrowcancelingedit="CancelEditUser">
       <Columns>
 
